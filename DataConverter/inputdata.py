@@ -16,7 +16,6 @@ def inputdata(root):
     images, labels = shuffle_numpy_together(images, labels)
     return images, labels
 
-
 def read_data_sets(train_dir,
                    reshape=True,
                    validation_size=100):
