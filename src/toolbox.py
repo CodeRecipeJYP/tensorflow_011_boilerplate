@@ -2,12 +2,15 @@ import tensorflow as tf
 from config.config import HYPARMS
 
 
-def fill_feed_dict(input, images_pl, labels_pl, keep_prob, evalflag=False):
-    images_feed = input
-    dropout_rate = 1
+def fill_feed_dict(data_set, images_pl, labels_pl, keep_prob, evalflag=False):
+    images_feed, labels_feed = data_set.next_batch(HYPARMS.batch_size)
+    if evalflag:
+        dropout_rate = 1
+    else:
+        dropout_rate = HYPARMS.dropout_rate
     feed_dict = {
         images_pl: images_feed,
-        labels_pl: [0],
+        labels_pl: labels_feed,
         keep_prob: dropout_rate,
     }
     return feed_dict

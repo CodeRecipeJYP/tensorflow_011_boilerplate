@@ -37,14 +37,11 @@ class Model:
     def init(self, batch_size=HYPARMS.batch_size):
         self.sess = tf.Session()
         self.placebundle = placeholder_inputs(batch_size)
+        self.load_graph()
         self.init_saver()
 
         init = tf.initialize_all_variables()
         self.sess.run(init)
-
-        self.logits = graph_model(self.placebundle)
-        self.sftmax = tf.nn.softmax(self.logits)
-        self.classified= tf.argmax(self.sftmax,1)
 
     def restore_saver(self):
         ckpt = tf.train.get_checkpoint_state(HYPARMS.ckpt_dir)
@@ -60,6 +57,11 @@ class Model:
         self.loss = calcul_loss(self.logits, self.placebundle)
         self.train_op = training(self.loss, HYPARMS.learning_rate)
         self.eval_correct = evaluation(self.logits, self.placebundle)
+
+        self.logits = graph_model(self.placebundle)
+        self.sftmax = tf.nn.softmax(self.logits)
+        self.classified= tf.argmax(self.sftmax,1)
+
 
     def init_saver(self):
         self.checkpoint_file = os.path.join(HYPARMS.ckpt_dir, HYPARMS.ckpt_name)
