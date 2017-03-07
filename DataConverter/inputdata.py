@@ -1,9 +1,9 @@
-from load.classifier import shuffle_numpy_together
-from load.loadfile import load_data
-from load.converter import convert_data_to_numpy
-from process.normalizer_pillow import normalize_images
-from visualize.visualizer_numpy import show_nbyn_images
-from object.dataset import DataSet, Datasets
+from DataConverter.load.classifier import shuffle_numpy_together
+from DataConverter.load.loadfile import load_data
+from DataConverter.load.converter import convert_data_to_numpy
+from DataConverter.process.normalizer_pillow import normalize_images
+from DataConverter.visualize.visualizer_numpy import show_nbyn_images
+from DataConverter.object.dataset import DataSet, Datasets
 
 
 def inputdata(root):

@@ -30,7 +30,6 @@ def do_eval(sess,
                                images_placeholder,
                                labels_placeholder,
                                keep_prob,
-                               HYPARMS,
                                True)
     true_count += sess.run(eval_correct, feed_dict=feed_dict)
   precision = float(true_count) / num_examples

@@ -8,15 +8,15 @@ from .graph import placeholder_inputs,graph_model,calcul_loss,training,evaluatio
 
 
 class Model:
-    train_set = None
-    test_set = None
-    logits = None
-    recog_placebundle = None
-    train_placebundle = None
-    loss = None
-    train_op = None
-    eval_correct = None
-    saver = None
+    # train_set = None
+    # test_set = None
+    # logits = None
+    # recog_placebundle = None
+    # train_placebundle = None
+    # loss = None
+    # train_op = None
+    # eval_correct = None
+    # saver = None
 
     def __init__(self, recognizer_flag = False):
         if recognizer_flag:

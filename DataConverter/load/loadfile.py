@@ -1,5 +1,5 @@
 from PIL import Image
-from loaddir import load_allpath,get_folder_name
+from .loaddir import load_allpath,get_folder_name
 
 
 def load_data(root):
@@ -23,18 +23,19 @@ def load_label(path, map):
 
 def load_alllabel(paths):
     res = []
-    map = {
-        '0': 0,
-        '1': 1,
-        '2': 2,
-        '3': 3,
-        '4': 4,
-        '5': 5,
-        '6': 6,
-        '7': 7,
-        '8': 8,
-        '9': 9,
-    }
+    map = {str(n):n for n in range(10)}
+    # map = {
+    #     '0': 0,
+    #     '1': 1,
+    #     '2': 2,
+    #     '3': 3,
+    #     '4': 4,
+    #     '5': 5,
+    #     '6': 6,
+    #     '7': 7,
+    #     '8': 8,
+    #     '9': 9,
+    # }
 
     for path in paths:
         res.append(load_label(path, map))
