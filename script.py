@@ -9,3 +9,8 @@ data_sets = inputdata.read_data_sets(HYPARMS.input_data_dir)
 
 model.load_data(data_sets.train, data_sets.test)
 model.train()
+
+
+## test predictor
+#model.load_data()
+#model.predict()
