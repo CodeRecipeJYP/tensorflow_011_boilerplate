@@ -25,15 +25,6 @@ class Model:
         else:
             self.init()
 
-    def load_data(self, train_data_set, test_data_set):
-        self.train_set = train_data_set
-        self.test_set = test_data_set
-
-    def predict(self, input):
-        with self.sess.as_default():
-            return self.classified.eval(feed_dict = {self.placebundle.x: input,
-                                                    self.placebundle.keep_prob: 1})
-
     def init(self, batch_size=HYPARMS.batch_size):
         self.sess = tf.Session()
         self.placebundle = placeholder_inputs(batch_size)
@@ -43,13 +34,14 @@ class Model:
         init = tf.initialize_all_variables()
         self.sess.run(init)
 
-    def restore_saver(self):
-        ckpt = tf.train.get_checkpoint_state(HYPARMS.ckpt_dir)
-        if ckpt and ckpt.model_checkpoint_path:
-            self.saver.restore(self.sess, ckpt.model_checkpoint_path)
-            print("Model loaded")
-        else:
-            print("No checkpoint file found")
+    def load_data(self, train_data_set, test_data_set):
+        self.train_set = train_data_set
+        self.test_set = test_data_set
+
+    def predict(self, input):
+        with self.sess.as_default():
+            return self.classified.eval(feed_dict = {self.placebundle.x: input,
+                                                    self.placebundle.keep_prob: 1})
 
     def load_graph(self):
         self.placebundle = placeholder_inputs(HYPARMS.batch_size)
@@ -60,8 +52,7 @@ class Model:
 
         self.logits = graph_model(self.placebundle)
         self.sftmax = tf.nn.softmax(self.logits)
-        self.classified= tf.argmax(self.sftmax,1)
-
+        self.classified = tf.argmax(self.sftmax,1)
 
     def init_saver(self):
         self.checkpoint_file = os.path.join(HYPARMS.ckpt_dir, HYPARMS.ckpt_name)
@@ -69,6 +60,14 @@ class Model:
 
     def save_saver(self):
         self.saver.save(self.sess, self.checkpoint_file, global_step=self.step)
+
+    def restore_saver(self):
+        ckpt = tf.train.get_checkpoint_state(HYPARMS.ckpt_dir)
+        if ckpt and ckpt.model_checkpoint_path:
+            self.saver.restore(self.sess, ckpt.model_checkpoint_path)
+            print("Model loaded")
+        else:
+            print("No checkpoint file found")
 
     def train(self):
         init = tf.initialize_all_variables()
